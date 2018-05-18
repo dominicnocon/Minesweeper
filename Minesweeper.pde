@@ -6,8 +6,8 @@ private MSButton[][] buttons; //2d array of minesweeper buttons
 private ArrayList <MSButton> bombs  = new ArrayList <MSButton>(); //ArrayList of just the minesweeper buttons that are mined
 public static int NUM_ROWS = 5;
 public static int NUM_COLS = 5;
-public static int NUM_BOMBS = 4;
-
+public static int NUM_BOMBS = 1;
+private boolean isLose = false;
 
 
 void setup ()
@@ -59,18 +59,27 @@ public void draw ()
 }
 public boolean isWon()
 {
-    buttons[0][0].setLabel("L");
-    buttons[1][0].setLabel("O");
-    buttons[2][0].setLabel("S");
-    buttons[3][0].setLabel("E");
+    for (int i = 0; i < NUM_ROWS; i++) {
+    for (int j = 0; j < NUM_COLS; j++) {
+      if (!bombs.contains(buttons[i][j]) && buttons[i][j].isClicked() == false) {
+        return false;
+      }
+    }
+  }
+  return true;
 }
 public void displayLosingMessage()
 {
-    //your code here
+        buttons[0][0].setLabel("L");
+        buttons[0][1].setLabel("O");
+        buttons[0][2].setLabel("S");
+        buttons[0][3].setLabel("E");
 }
 public void displayWinningMessage()
 {
-    //your code here
+        buttons[0][0].setLabel("W");
+        buttons[0][1].setLabel("I");
+        buttons[0][2].setLabel("N");
 }
 
 public class MSButton
@@ -156,7 +165,7 @@ public class MSButton
     }
     public boolean isValid(int r, int c)
     {
-        if(r < NUM_ROWS && c < NUM_COLS)
+        if(r < NUM_ROWS && c < NUM_COLS && r>= 0 && c>=0)
             return true;
         return false;
     }
@@ -176,9 +185,7 @@ public class MSButton
 
 
 
-    public void setLabel(String newLabel) {
-    label = newLabel;
-  }
+
 }
 
 
